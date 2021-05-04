@@ -70,7 +70,10 @@ def request_finished_signal(sender, **kwargs) -> None:
     if 'response' in settings.request.data.enabled:
         response_context = RequestContext()
         response_context.content = environ.response.content
-        response_context.type = environ.response['Content-Type']
+        try:
+            response_context.type = environ.response['Content-Type']
+        except Exception:
+            response_context.type = "text/html"
 
         request.response = response_context
 
