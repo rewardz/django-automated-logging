@@ -59,7 +59,10 @@ def request_finished_signal(sender, **kwargs) -> None:
 
     if 'request' in settings.request.data.enabled:
         request_context = RequestContext()
-        request_context.content = environ.request.body
+        try:
+            request_context.content = environ.request.body
+        except Exception:
+            pass
         request_context.type = environ.request.content_type
 
         request.request = request_context

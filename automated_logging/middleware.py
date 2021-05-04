@@ -127,4 +127,4 @@ class AutomatedLoggingMiddleware:
         if isinstance(environ.request.user, AnonymousUser):
             return None
 
-        return environ.request.user
+        return environ.request.user.id

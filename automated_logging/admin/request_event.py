@@ -30,19 +30,32 @@ class RequestEventAdmin(ReadOnlyAdminMixin):
 
     def get_user(self, instance):
         """ get the user with a URL """
-        return self.model_admin_url(instance.user)
+        return instance.user
 
     get_user.short_description = 'User'
+
+    def get_request(self, instance):
+        """ get the request. just a redirect to set the short description. """
+        return instance.request.content
+
+    get_uri.short_description = 'Request'
+
+    def get_response(self, instance):
+        """ get the response. just a redirect to set the short description. """
+        return instance.response.content
+
+    get_uri.short_description = 'Response'
 
     list_display = ('get_id', 'updated_at', 'user', 'method', 'status', 'uri')
 
     date_hierarchy = 'updated_at'
     ordering = ('-updated_at',)
 
-    list_filter = ('updated_at', ('user', RelatedOnlyFieldListFilter))
+    list_filter = ('updated_at', )
 
     fieldsets = (
         ('Information', {'fields': ('id', 'get_user', 'updated_at', 'application',)},),
         ('HTTP', {'fields': ('method', 'status', 'get_uri')}),
+        ('Request', {'fields': ('get_request',)}),
+        ('Response', {'fields': ('get_response',)}),
     )
-    # TODO: Context

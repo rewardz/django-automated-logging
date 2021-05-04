@@ -152,7 +152,7 @@ class ModelEventAdmin(ReadOnlyAdminMixin):
 
     def get_user(self, instance):
         """ return the user with a link """
-        return self.model_admin_url(instance.user) if instance.user else None
+        return instance.user
 
     get_user.short_description = 'User'
 
@@ -167,7 +167,7 @@ class ModelEventAdmin(ReadOnlyAdminMixin):
 
     list_filter = (
         'updated_at',
-        ('user', RelatedOnlyFieldListFilter),
+        # ('user', RelatedOnlyFieldListFilter),
         ('entry__mirror__application', RelatedOnlyFieldListFilter),
         ('entry__mirror', RelatedOnlyFieldListFilter),
     )

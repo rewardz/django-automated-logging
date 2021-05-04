@@ -93,14 +93,14 @@ def pre_save_signal(sender, instance, **kwargs) -> None:
             for k, v in set(
                 # generate a set from the dict of old values
                 # exclude protected and magic attributes
-                (k, v)
+                (k, v if not isinstance(v, list) else tuple(v))
                 for k, v in old.items()
                 if not k.startswith('_')
             ).difference(
                 set(
                     # generate a set from the dict of new values
                     # also exclude the protected and magic attributes
-                    (k, v)
+                    (k, v if not isinstance(v, list) else tuple(v))
                     for k, v in new.items()
                     if not k.startswith('_')
                 )

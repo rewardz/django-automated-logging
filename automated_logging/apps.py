@@ -8,9 +8,10 @@ class AutomatedloggingConfig(AppConfig):
 
     def ready(self):
         if 'request' in settings.modules:
-            from .signals import request
+            from .signals import request # noqa
         if 'model' in settings.modules:
-            from .signals import save
-            from .signals import m2m
+            from .signals import save # noqa
+            from .signals import m2m # noqa
 
-        from .handlers import DatabaseHandler
+        from .signals import common # noqa
+        from .handlers import DatabaseHandler # noqa

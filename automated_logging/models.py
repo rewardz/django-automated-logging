@@ -3,7 +3,6 @@ Model definitions for django-automated-logging.
 """
 import uuid
 
-from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import (
@@ -150,9 +149,10 @@ class ModelEvent(BaseModel):
         choices=DjangoOperations,
     )
 
-    user = ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=CASCADE, null=True
-    )  # maybe don't cascade?
+    user = models.IntegerField(
+        help_text="User ID from the Authentication system",
+        null=True
+    )
     entry = ForeignKey(ModelEntry, on_delete=CASCADE)
 
     # modifications = None  # One2Many -> ModelModification
@@ -300,7 +300,10 @@ class RequestEvent(BaseModel):
     status and method are their respective HTTP equivalents.
     """
 
-    user = ForeignKey(settings.AUTH_USER_MODEL, on_delete=CASCADE, null=True)
+    user = models.IntegerField(
+        help_text="User ID from the Authentication system",
+        null=True
+    )
 
     # to mitigate "max_length"
     uri = TextField()
